@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Espace Client — Étude Maître Rokia ADJAGBA</title>
+  <meta name="description" content="Accédez à vos constats, documents et demandes en ligne — Espace client sécurisé de l'Étude Rokia ADJAGBA, Commissaire de Justice." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/portal.css" />
+</head>
+<body class="portal-body">
+
+  <!-- ══════════════════════════════════════════
+       LOGIN SCREEN  (shown when not authenticated)
+  ══════════════════════════════════════════ -->
+  <div class="login-screen" id="login-screen">
+
+    <!-- Left panel — branding -->
+    <div class="login-left">
+      <a href="index.html" class="login-logo">
+        <div class="logo-mark">
+          <span class="logo-initials">RA</span>
+          <span class="logo-cdj">CDJ</span>
+        </div>
+        <div class="logo-text">
+          <span class="logo-name">Maître Rokia ADJAGBA</span>
+          <span class="logo-title">Commissaire de Justice</span>
+        </div>
+      </a>
+
+      <div class="login-left-content">
+        <h2>Espace Client Sécurisé</h2>
+        <p>Accédez à vos constats, documents officiels et suivez l'avancement de vos demandes en temps réel.</p>
+
+        <div class="login-features">
+          <div class="lf-item">
+            <span class="lf-icon">📋</span>
+            <div>
+              <strong>Vos constats</strong>
+              <span>Consultez et téléchargez tous vos rapports</span>
+            </div>
+          </div>
+          <div class="lf-item">
+            <span class="lf-icon">📁</span>
+            <div>
+              <strong>Vos documents</strong>
+              <span>Actes, significations, décisions</span>
+            </div>
+          </div>
+          <div class="lf-item">
+            <span class="lf-icon">🔄</span>
+            <div>
+              <strong>Suivi de vos demandes</strong>
+              <span>État en temps réel de chaque dossier</span>
+            </div>
+          </div>
+          <div class="lf-item">
+            <span class="lf-icon">💬</span>
+            <div>
+              <strong>Messagerie directe</strong>
+              <span>Échangez avec l'étude en toute sécurité</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="login-left-footer">
+        <p>🔒 Connexion sécurisée — Données chiffrées</p>
+        <p>⚖️ Étude officielle sous tutelle du CNB</p>
+      </div>
+    </div>
+
+    <!-- Right panel — login form -->
+    <div class="login-right">
+      <div class="login-box">
+        <div class="login-box-header">
+          <h1>Connexion</h1>
+          <p>Entrez vos identifiants pour accéder à votre espace.</p>
+        </div>
+
+        <!-- Demo credentials info -->
+        <div class="demo-info">
+          <strong>🧪 Démonstration</strong>
+          <div class="demo-accounts">
+            <div class="demo-account" onclick="fillDemo('client@example.fr','Client2026!')">
+              <span class="demo-role">👤 Client particulier</span>
+              <code>client@example.fr</code>
+            </div>
+            <div class="demo-account" onclick="fillDemo('pro@cabinet.fr','ProCDJ2026!')">
+              <span class="demo-role">🏢 Client professionnel</span>
+              <code>pro@cabinet.fr</code>
+            </div>
+          </div>
+          <small>Cliquez sur un compte pour pré-remplir</small>
+        </div>
+
+        <form class="login-form" id="login-form" novalidate>
+          <div class="lf-group">
+            <label for="login-email">Adresse email</label>
+            <div class="lf-input-wrap">
+              <span class="lf-icon-field">✉️</span>
+              <input type="email" id="login-email" name="email" placeholder="votre@email.fr" autocomplete="email" />
+            </div>
+          </div>
+
+          <div class="lf-group">
+            <label for="login-password">
+              Mot de passe
+              <a href="#" class="forgot-link" onclick="showForgotMsg(event)">Mot de passe oublié ?</a>
+            </label>
+            <div class="lf-input-wrap">
+              <span class="lf-icon-field">🔒</span>
+              <input type="password" id="login-password" name="password" placeholder="••••••••••" autocomplete="current-password" />
+              <button type="button" class="toggle-pw" id="toggle-pw" aria-label="Afficher le mot de passe">👁</button>
+            </div>
+          </div>
+
+          <div class="lf-remember">
+            <input type="checkbox" id="remember" name="remember" />
+            <label for="remember">Se souvenir de moi</label>
+          </div>
+
+          <div class="lf-error" id="login-error"></div>
+
+          <button type="submit" class="btn-login" id="btn-login">
+            Accéder à mon espace →
+          </button>
+        </form>
+
+        <div class="login-box-footer">
+          <p>Vous n'avez pas encore d'accès ? <a href="index.html#contact">Contactez l'étude →</a></p>
+          <a href="index.html" class="back-site">← Retour au site</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ══════════════════════════════════════════
+       DASHBOARD  (hidden until authenticated)
+  ══════════════════════════════════════════ -->
+  <div class="dashboard" id="dashboard" style="display:none">
+
+    <!-- TOP BAR -->
+    <header class="dash-header">
+      <div class="dash-header-left">
+        <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle sidebar">☰</button>
+        <a href="index.html" class="dash-logo">
+          <div class="logo-mark small">
+            <span class="logo-initials">RA</span>
+            <span class="logo-cdj">CDJ</span>
+          </div>
+          <span class="dash-logo-text">CDJ · Espace Client</span>
+        </a>
+      </div>
+      <div class="dash-header-right">
+        <div class="dash-notif" id="dash-notif" title="Notifications">
+          🔔
+          <span class="notif-badge" id="notif-badge">2</span>
+        </div>
+        <div class="dash-user" id="dash-user-btn">
+          <div class="dash-avatar" id="dash-avatar">CL</div>
+          <div class="dash-user-info">
+            <strong id="dash-user-name">Client</strong>
+            <span id="dash-user-ref">Réf. —</span>
+          </div>
+          <span class="dash-chevron">▾</span>
+        </div>
+        <div class="user-dropdown" id="user-dropdown">
+          <button class="ud-item" onclick="showSection('profil')">👤 Mon profil</button>
+          <button class="ud-item" onclick="showSection('messages')">💬 Mes messages</button>
+          <hr class="ud-sep" />
+          <button class="ud-item ud-logout" id="logout-btn">🚪 Se déconnecter</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- LAYOUT -->
+    <div class="dash-layout">
+
+      <!-- SIDEBAR -->
+      <aside class="dash-sidebar" id="dash-sidebar">
+        <nav class="sidebar-nav">
+          <button class="snav-item active" data-section="overview">
+            <span class="snav-icon">📊</span>
+            <span class="snav-label">Tableau de bord</span>
+          </button>
+          <button class="snav-item" data-section="constats">
+            <span class="snav-icon">📋</span>
+            <span class="snav-label">Mes constats</span>
+            <span class="snav-badge" id="badge-constats"></span>
+          </button>
+          <button class="snav-item" data-section="documents">
+            <span class="snav-icon">📁</span>
+            <span class="snav-label">Mes documents</span>
+            <span class="snav-badge" id="badge-documents"></span>
+          </button>
+          <button class="snav-item" data-section="demandes">
+            <span class="snav-icon">🔄</span>
+            <span class="snav-label">Mes demandes</span>
+            <span class="snav-badge snav-badge-orange" id="badge-demandes"></span>
+          </button>
+          <button class="snav-item" data-section="nouvelle-demande">
+            <span class="snav-icon">➕</span>
+            <span class="snav-label">Nouvelle demande</span>
+          </button>
+          <button class="snav-item" data-section="paiements">
+            <span class="snav-icon">💳</span>
+            <span class="snav-label">Paiements</span>
+          </button>
+          <button class="snav-item" data-section="messages">
+            <span class="snav-icon">💬</span>
+            <span class="snav-label">Messages</span>
+            <span class="snav-badge snav-badge-red" id="badge-messages">2</span>
+          </button>
+          <hr class="snav-sep" />
+          <button class="snav-item" data-section="profil">
+            <span class="snav-icon">👤</span>
+            <span class="snav-label">Mon profil</span>
+          </button>
+          <a href="index.html" class="snav-item snav-back">
+            <span class="snav-icon">🌐</span>
+            <span class="snav-label">Site public</span>
+          </a>
+        </nav>
+      </aside>
+
+      <!-- MAIN CONTENT -->
+      <main class="dash-main" id="dash-main">
+
+        <!-- ── OVERVIEW ── -->
+        <section class="dash-section active" id="section-overview">
+          <div class="section-top">
+            <div>
+              <h2>Tableau de bord</h2>
+              <p class="section-sub" id="welcome-msg">Bienvenue dans votre espace client.</p>
+            </div>
+            <button class="btn-primary" onclick="showSection('nouvelle-demande')">➕ Nouvelle demande</button>
+          </div>
+
+          <!-- KPI Cards -->
+          <div class="kpi-grid" id="kpi-grid">
+            <!-- populated by JS -->
+          </div>
+
+          <!-- Recent items -->
+          <div class="dash-two-col">
+            <div class="dash-card">
+              <div class="dc-header">
+                <h3>📋 Derniers constats</h3>
+                <button class="dc-see-all" onclick="showSection('constats')">Voir tous →</button>
+              </div>
+              <div id="overview-constats"></div>
+            </div>
+            <div class="dash-card">
+              <div class="dc-header">
+                <h3>🔄 Demandes en cours</h3>
+                <button class="dc-see-all" onclick="showSection('demandes')">Voir toutes →</button>
+              </div>
+              <div id="overview-demandes"></div>
+            </div>
+          </div>
+
+          <!-- Notifications -->
+          <div class="dash-card" id="notifications-card">
+            <div class="dc-header">
+              <h3>🔔 Notifications récentes</h3>
+            </div>
+            <div id="notifications-list"></div>
+          </div>
+        </section>
+
+
+        <!-- ── CONSTATS ── -->
+        <section class="dash-section" id="section-constats">
+          <div class="section-top">
+            <div>
+              <h2>Mes Constats</h2>
+              <p class="section-sub">Consultez et téléchargez vos rapports de constat officiels.</p>
+            </div>
+          </div>
+
+          <div class="table-filters">
+            <input type="search" class="filter-input" id="filter-constats" placeholder="🔍 Rechercher un constat…" />
+            <select class="filter-select" id="filter-constat-type">
+              <option value="">Tous les types</option>
+              <option value="travaux">Avant/après travaux</option>
+              <option value="internet">Constat internet</option>
+              <option value="etat-lieux">État des lieux</option>
+              <option value="sinistre">Sinistre</option>
+              <option value="nuisance">Nuisance</option>
+            </select>
+            <select class="filter-select" id="filter-constat-year">
+              <option value="">Toutes les années</option>
+              <option value="2026">2026</option>
+              <option value="2025">2025</option>
+            </select>
+          </div>
+
+          <div class="documents-table-wrap">
+            <table class="documents-table" id="constats-table">
+              <thead>
+                <tr>
+                  <th>Référence</th>
+                  <th>Type de constat</th>
+                  <th>Date</th>
+                  <th>Adresse d'intervention</th>
+                  <th>Statut</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="constats-tbody">
+                <!-- populated by JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <div class="empty-state" id="constats-empty" style="display:none">
+            <div class="es-icon">📋</div>
+            <h3>Aucun constat trouvé</h3>
+            <p>Aucun constat ne correspond à vos critères de recherche.</p>
+          </div>
+        </section>
+
+
+        <!-- ── DOCUMENTS ── -->
+        <section class="dash-section" id="section-documents">
+          <div class="section-top">
+            <div>
+              <h2>Mes Documents</h2>
+              <p class="section-sub">Actes judiciaires, extrajudiciaires, décisions et correspondances.</p>
+            </div>
+          </div>
+
+          <div class="table-filters">
+            <input type="search" class="filter-input" id="filter-docs" placeholder="🔍 Rechercher un document…" />
+            <select class="filter-select" id="filter-doc-type">
+              <option value="">Tous les types</option>
+              <option value="acte">Actes judiciaires</option>
+              <option value="signification">Significations</option>
+              <option value="courrier">Courriers</option>
+              <option value="decision">Décisions</option>
+            </select>
+          </div>
+
+          <div class="documents-table-wrap">
+            <table class="documents-table" id="docs-table">
+              <thead>
+                <tr>
+                  <th>Référence</th>
+                  <th>Intitulé</th>
+                  <th>Type</th>
+                  <th>Date</th>
+                  <th>Format</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="docs-tbody"></tbody>
+            </table>
+          </div>
+          <div class="empty-state" id="docs-empty" style="display:none">
+            <div class="es-icon">📁</div>
+            <h3>Aucun document trouvé</h3>
+            <p>Aucun document ne correspond à votre recherche.</p>
+          </div>
+        </section>
+
+
+        <!-- ── DEMANDES ── -->
+        <section class="dash-section" id="section-demandes">
+          <div class="section-top">
+            <div>
+              <h2>Mes Demandes</h2>
+              <p class="section-sub">Suivez l'avancement de toutes vos demandes.</p>
+            </div>
+            <button class="btn-primary" onclick="showSection('nouvelle-demande')">➕ Nouvelle demande</button>
+          </div>
+
+          <div class="table-filters">
+            <input type="search" class="filter-input" id="filter-demandes" placeholder="🔍 Rechercher une demande…" />
+            <select class="filter-select" id="filter-demande-status">
+              <option value="">Tous les statuts</option>
+              <option value="en-cours">En cours</option>
+              <option value="traite">Traité</option>
+              <option value="attente">En attente</option>
+              <option value="annule">Annulé</option>
+            </select>
+          </div>
+
+          <div id="demandes-list"></div>
+
+          <div class="empty-state" id="demandes-empty" style="display:none">
+            <div class="es-icon">🔄</div>
+            <h3>Aucune demande en cours</h3>
+            <p>Vous n'avez pas encore soumis de demande.</p>
+            <button class="btn-primary" onclick="showSection('nouvelle-demande')" style="margin-top:16px">Créer une demande →</button>
+          </div>
+        </section>
+
+
+        <!-- ── NOUVELLE DEMANDE ── -->
+        <section class="dash-section" id="section-nouvelle-demande">
+          <div class="section-top">
+            <div>
+              <h2>Nouvelle Demande</h2>
+              <p class="section-sub">Décrivez votre besoin — nous vous répondrons sous 24h ouvrées.</p>
+            </div>
+          </div>
+
+          <div class="new-request-layout">
+
+            <!-- Form -->
+            <div class="dash-card new-request-form-card">
+              <form class="new-request-form" id="new-request-form" novalidate>
+                <div class="nrf-group">
+                  <label>Type de demande *</label>
+                  <select name="type" required id="req-type">
+                    <option value="" disabled selected>Sélectionnez un service</option>
+                    <optgroup label="Constats">
+                      <option value="constat-travaux">Constat avant/après travaux</option>
+                      <option value="constat-internet">Constat internet / réseaux sociaux</option>
+                      <option value="constat-etat-lieux">État des lieux</option>
+                      <option value="constat-sinistre">Constat de sinistre</option>
+                      <option value="constat-nuisance">Constat de nuisance</option>
+                      <option value="constat-autre">Autre constat</option>
+                    </optgroup>
+                    <optgroup label="Recouvrement">
+                      <option value="recouvrement-amiable">Recouvrement amiable</option>
+                      <option value="recouvrement-judiciaire">Recouvrement judiciaire</option>
+                      <option value="pension">Pension alimentaire</option>
+                    </optgroup>
+                    <optgroup label="Signification">
+                      <option value="signification-assignation">Signification d'assignation</option>
+                      <option value="signification-decision">Signification de décision</option>
+                      <option value="conge-bail">Congé de bail</option>
+                      <option value="commandement">Commandement de payer</option>
+                    </optgroup>
+                    <optgroup label="Exécution & Locatif">
+                      <option value="saisie">Saisie-attribution / saisie-vente</option>
+                      <option value="expulsion">Procédure d'expulsion</option>
+                      <option value="local-abandonne">Local abandonné</option>
+                    </optgroup>
+                    <optgroup label="Autre">
+                      <option value="consultation">Consultation juridique</option>
+                      <option value="autre">Autre demande</option>
+                    </optgroup>
+                  </select>
+                </div>
+
+                <div class="nrf-group" id="urgency-group">
+                  <label>Urgence</label>
+                  <div class="urgency-pills">
+                    <label class="urgency-pill">
+                      <input type="radio" name="urgence" value="normale" checked />
+                      <span>🟢 Normale (48-72h)</span>
+                    </label>
+                    <label class="urgency-pill">
+                      <input type="radio" name="urgence" value="prioritaire" />
+                      <span>🟡 Prioritaire (24h)</span>
+                    </label>
+                    <label class="urgency-pill">
+                      <input type="radio" name="urgence" value="urgente" />
+                      <span>🔴 Urgente (même jour)</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="nrf-two-col">
+                  <div class="nrf-group">
+                    <label>Date souhaitée d'intervention</label>
+                    <input type="date" name="date" id="req-date" />
+                  </div>
+                  <div class="nrf-group">
+                    <label>Créneau horaire préféré</label>
+                    <select name="creneau">
+                      <option value="">Indifférent</option>
+                      <option value="matin">Matin (9h–12h)</option>
+                      <option value="apres-midi">Après-midi (13h–18h)</option>
+                      <option value="soir">Soir (après 18h)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="nrf-group">
+                  <label>Adresse d'intervention <span class="optional">(si applicable)</span></label>
+                  <input type="text" name="adresse" placeholder="Ex : 12 rue des Lilas, 59000 Lille" />
+                </div>
+
+                <div class="nrf-group">
+                  <label>Description de votre demande *</label>
+                  <textarea name="description" rows="5" placeholder="Décrivez votre situation avec le maximum de détails (parties en cause, contexte, objectif visé…)" required></textarea>
+                </div>
+
+                <div class="nrf-group">
+                  <label>Pièces jointes <span class="optional">(facultatif)</span></label>
+                  <div class="file-drop-zone" id="file-drop-zone">
+                    <input type="file" id="file-input" multiple accept=".pdf,.jpg,.jpeg,.png,.docx" hidden />
+                    <div class="fdz-content" onclick="document.getElementById('file-input').click()">
+                      <span class="fdz-icon">📎</span>
+                      <p>Glissez vos fichiers ici ou <strong>cliquez pour parcourir</strong></p>
+                      <small>PDF, JPG, PNG, DOCX · 10 Mo max par fichier</small>
+                    </div>
+                    <div class="fdz-files" id="fdz-files"></div>
+                  </div>
+                </div>
+
+                <div class="nrf-error" id="req-error"></div>
+                <div class="nrf-success" id="req-success"></div>
+
+                <div class="nrf-actions">
+                  <button type="button" class="btn-outline-dark" onclick="showSection('demandes')">Annuler</button>
+                  <button type="submit" class="btn-primary" id="req-submit-btn">
+                    Soumettre la demande →
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Info panel -->
+            <div class="new-request-info">
+              <div class="dash-card nri-card">
+                <h4>⚡ Délais de traitement</h4>
+                <ul class="nri-list">
+                  <li><span class="nri-dot green"></span>Normale — 48 à 72h ouvrées</li>
+                  <li><span class="nri-dot yellow"></span>Prioritaire — sous 24h ouvrées</li>
+                  <li><span class="nri-dot red"></span>Urgente — intervention le jour même</li>
+                </ul>
+              </div>
+              <div class="dash-card nri-card">
+                <h4>📞 Urgence immédiate</h4>
+                <p>Pour les constats urgents (sinistres, dégâts en cours, situations critiques) :</p>
+                <a href="tel:0756880921" class="nri-phone">🚨 07 56 88 09 21</a>
+                <small>Disponible 24h/7j</small>
+              </div>
+              <div class="dash-card nri-card">
+                <h4>ℹ️ Informations</h4>
+                <p>Votre demande sera examinée par Maître ADJAGBA dans les meilleurs délais. Un accusé de réception vous sera envoyé par email.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ── PAIEMENTS ── -->
+        <section class="dash-section" id="section-paiements">
+          <div class="section-top">
+            <div>
+              <h2>Paiements</h2>
+              <p class="section-sub">Consultez vos factures et effectuez vos règlements en ligne.</p>
+            </div>
+          </div>
+
+          <div id="paiements-content"></div>
+        </section>
+
+
+        <!-- ── MESSAGES ── -->
+        <section class="dash-section" id="section-messages">
+          <div class="section-top">
+            <div>
+              <h2>Messagerie</h2>
+              <p class="section-sub">Échangez en toute sécurité avec l'étude.</p>
+            </div>
+          </div>
+
+          <div class="messages-layout">
+            <div class="messages-list-panel">
+              <div id="messages-list"></div>
+            </div>
+            <div class="messages-compose-panel">
+              <div class="dash-card compose-card">
+                <h4>✉️ Nouveau message</h4>
+                <form id="compose-form">
+                  <div class="nrf-group">
+                    <label>Objet</label>
+                    <input type="text" name="objet" placeholder="Sujet du message…" />
+                  </div>
+                  <div class="nrf-group">
+                    <label>Message</label>
+                    <textarea name="corps" rows="6" placeholder="Votre message…"></textarea>
+                  </div>
+                  <button type="submit" class="btn-primary">Envoyer →</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ── PROFIL ── -->
+        <section class="dash-section" id="section-profil">
+          <div class="section-top">
+            <h2>Mon Profil</h2>
+          </div>
+
+          <div class="profile-layout">
+            <div class="dash-card profile-card">
+              <div class="profile-avatar-wrap">
+                <div class="profile-avatar" id="profile-avatar-big">CL</div>
+                <div>
+                  <h3 id="profile-fullname">—</h3>
+                  <span id="profile-type-badge" class="profile-badge">Client</span>
+                </div>
+              </div>
+              <hr />
+              <div class="profile-info-grid" id="profile-info-grid">
+                <!-- populated by JS -->
+              </div>
+              <button class="btn-primary" style="margin-top:20px" onclick="alert('Modification du profil — fonctionnalité à connecter au backend.')">Modifier mes informations</button>
+            </div>
+
+            <div class="profile-side">
+              <div class="dash-card">
+                <h4>🔐 Sécurité du compte</h4>
+                <div class="security-items">
+                  <div class="sec-item">
+                    <span class="sec-icon">✅</span>
+                    <div>
+                      <strong>Mot de passe</strong>
+                      <small>Dernière modification : il y a 30 jours</small>
+                    </div>
+                    <button class="btn-sec" onclick="alert('Modification du mot de passe — à connecter au backend.')">Modifier</button>
+                  </div>
+                  <div class="sec-item">
+                    <span class="sec-icon">📧</span>
+                    <div>
+                      <strong>Email de récupération</strong>
+                      <small>Configuré</small>
+                    </div>
+                    <button class="btn-sec" onclick="alert('Email de récupération — à connecter au backend.')">Modifier</button>
+                  </div>
+                  <div class="sec-item">
+                    <span class="sec-icon">📱</span>
+                    <div>
+                      <strong>Double authentification</strong>
+                      <small>Non activée</small>
+                    </div>
+                    <button class="btn-sec" onclick="alert('Double authentification — à connecter au backend.')">Activer</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dash-card">
+                <h4>📊 Statistiques du compte</h4>
+                <div id="profile-stats"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+
+  <!-- DOCUMENT PREVIEW MODAL -->
+  <div class="doc-modal" id="doc-modal">
+    <div class="doc-modal-box">
+      <button class="doc-modal-close" id="doc-modal-close">✕</button>
+      <div id="doc-modal-content"></div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATIONS -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="js/client-portal.js"></script>
+</body>
+</html>
