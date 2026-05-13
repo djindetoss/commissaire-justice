@@ -1037,7 +1037,15 @@ address { font-style: normal; }
 .elfsight-wrapper .eapps-google-reviews-reviews-list-item-text { color: rgba(255,255,255,.85) !important; }
 .elfsight-wrapper .eapps-google-reviews-reviews-list-item { background: rgba(255,255,255,.06) !important; border: 1px solid rgba(255,255,255,.1) !important; border-radius: 12px !important; }
 .elfsight-wrapper .eapps-google-reviews-header-summary-score { color: var(--white) !important; }
-.elfsight-wrapper .eapps-link { display: none !important; } /* masque "Powered by Elfsight" si souhaité */
+/* Masquer les textes par défaut Elfsight */
+.elfsight-wrapper .eapps-link                          { display: none !important; }
+.elfsight-wrapper .eapps-google-reviews-header-title   { display: none !important; }
+.elfsight-wrapper [class*="header-title"]              { display: none !important; }
+.elfsight-wrapper [class*="widget-title"]              { display: none !important; }
+.elfsight-wrapper .eapps-widget-toolbar                { display: none !important; }
+.elfsight-wrapper [class*="powered-by"]                { display: none !important; }
+/* "Free Google Reviews Widget" banner */
+.eapps-widget-toolbar                                  { display: none !important; }
 
 /* ── Placeholder (avant configuration du widget) ── */
 .elfsight-placeholder {
