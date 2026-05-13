@@ -78,14 +78,10 @@ Notez l'ID : `a1b2c3d4-e5f6-7890-abcd-ef1234567890`
 Dans `index.html`, cherchez `VOTRE_PLACE_ID` et remplacez par votre Place ID Google :
 
 ```html
-<!-- AVANT -->
-<a href="https://search.google.com/local/reviews?placeid=VOTRE_PLACE_ID" ...>
-
-<!-- APRÈS (exemple) -->
-<a href="https://search.google.com/local/reviews?placeid=ChIJxxxxxxxxxxxxxxxx" ...>
+<a href="https://search.google.com/local/reviews?placeid=ChIJgYA4M10rw0cRen8hdk-5-g8" ...>
 ```
 
-> **Trouver votre Place ID** : https://developers.google.com/maps/documentation/javascript/examples/places-placeid-finder
+> **Place ID** : `ChIJgYA4M10rw0cRen8hdk-5-g8` (867 Av. de la République, 59700 Marcq-en-Barœul)
 
 ---
 
