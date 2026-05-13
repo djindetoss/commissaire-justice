@@ -994,6 +994,73 @@ address { font-style: normal; }
 }
 
 /* Google rating bar (above carousel) */
+/* ── Google live badge ── */
+.google-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 14px;
+  padding: 9px 20px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 40px;
+}
+.google-logo-small { height: 18px; width: auto; filter: brightness(0) invert(1); opacity: .75; }
+.live-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 0 2px rgba(74,222,128,.3);
+  animation: pulse-dot 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(74,222,128,.3); }
+  50%       { box-shadow: 0 0 0 5px rgba(74,222,128,.12); }
+}
+.google-live-badge span { font-size: 13px; color: rgba(255,255,255,.7); }
+.gr-link { font-size: 13px; color: var(--coral); text-decoration: none; font-weight: 600; white-space: nowrap; }
+.gr-link:hover { text-decoration: underline; }
+.light-desc { color: rgba(255,255,255,.65) !important; }
+
+/* ── Elfsight wrapper & theming ── */
+.elfsight-wrapper {
+  margin-top: 40px;
+  /* Force le widget à hériter du fond sombre */
+  --eapps-google-reviews-background-color: transparent;
+}
+
+/* Personnalisation Elfsight en dark mode */
+.elfsight-wrapper .eapps-google-reviews-reviews-list-item-reviewer-name,
+.elfsight-wrapper .eapps-google-reviews-reviews-list-item-text { color: rgba(255,255,255,.85) !important; }
+.elfsight-wrapper .eapps-google-reviews-reviews-list-item { background: rgba(255,255,255,.06) !important; border: 1px solid rgba(255,255,255,.1) !important; border-radius: 12px !important; }
+.elfsight-wrapper .eapps-google-reviews-header-summary-score { color: var(--white) !important; }
+.elfsight-wrapper .eapps-link { display: none !important; } /* masque "Powered by Elfsight" si souhaité */
+
+/* ── Placeholder (avant configuration du widget) ── */
+.elfsight-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 60px 32px;
+  background: rgba(255,255,255,.04);
+  border: 2px dashed rgba(255,255,255,.15);
+  border-radius: 16px;
+  text-align: center;
+}
+.elfsight-ph-icon { font-size: 42px; }
+.elfsight-ph-title { font-family: var(--font-head); font-size: 18px; font-weight: 700; color: var(--white); margin: 0; }
+.elfsight-ph-desc { font-size: 14px; color: rgba(255,255,255,.55); max-width: 440px; line-height: 1.7; margin: 0; }
+.elfsight-ph-desc a { color: var(--coral); }
+.elfsight-ph-desc code { background: rgba(255,255,255,.1); padding: 2px 8px; border-radius: 4px; font-size: 13px; color: rgba(255,255,255,.8); }
+
+/* hides placeholder once elfsight is active */
+.elfsight-wrapper:has(.eapps-google-reviews) .elfsight-placeholder { display: none; }
+
+/* ── Legacy kept for fallback carousel ── */
 .google-rating-bar {
   display: flex;
   align-items: center;
@@ -1009,12 +1076,9 @@ address { font-style: normal; }
   margin-left: auto;
   margin-right: auto;
 }
-.google-logo-small { height: 20px; width: auto; filter: brightness(0) invert(1); opacity: .8; }
 .gr-stars { display: flex; gap: 2px; }
 .gr-note  { font-size: 18px; font-weight: 700; color: var(--white); }
 .gr-count { font-size: 13px; color: rgba(255,255,255,.55); }
-.gr-link  { font-size: 12px; color: var(--coral); text-decoration: none; white-space: nowrap; }
-.gr-link:hover { text-decoration: underline; }
 
 /* Loading spinner */
 .testi-loading {

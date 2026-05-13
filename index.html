@@ -9,6 +9,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
+  <!-- Elfsight — décommentez après avoir créé votre widget -->
+  <!-- <script src="https://static.elfsight.com/platform/platform.js" async></script> -->
 </head>
 <body>
 
@@ -522,32 +524,47 @@
       <div class="section-header" data-animate="fadeInUp">
         <span class="section-eyebrow">Ce que disent nos clients</span>
         <h2 class="section-title light">Témoignages</h2>
-        <!-- Note moyenne Google -->
-        <div class="google-rating-bar" id="google-rating-bar" style="display:none">
+        <p class="section-desc light-desc">
+          Avis vérifiés Google — mis à jour en temps réel
+        </p>
+        <!-- Badge Google live -->
+        <div class="google-live-badge">
           <img src="https://www.google.com/images/branding/googlelogo/svg/googlelogo_clr_74x24px.svg"
                alt="Google" class="google-logo-small" />
-          <div class="gr-stars" id="gr-stars"></div>
-          <span class="gr-note" id="gr-note"></span>
-          <span class="gr-count" id="gr-count"></span>
-          <a href="https://g.page/r/reviews" target="_blank" class="gr-link">Voir sur Google →</a>
+          <span class="live-dot"></span>
+          <span>Avis en direct</span>
+          <a href="https://search.google.com/local/reviews?placeid=VOTRE_PLACE_ID"
+             target="_blank" rel="noopener" class="gr-link" id="google-reviews-link">
+            Laisser un avis →
+          </a>
         </div>
       </div>
 
-      <div class="carousel-wrapper">
-        <!-- Carousel peuplé dynamiquement depuis reviews.json -->
-        <div class="carousel" id="carousel">
-          <div class="testi-loading">
-            <div class="testi-spinner"></div>
-            <p>Chargement des avis…</p>
-          </div>
+      <!-- ════════════════════════════════════════
+           WIDGET ELFSIGHT — Google Reviews
+           1. Créez votre widget sur elfsight.com
+           2. Remplacez l'attribut data-elfsight-app-* ci-dessous
+              par l'ID fourni après la création du widget
+           ════════════════════════════════════════ -->
+      <div class="elfsight-wrapper" data-animate="fadeInUp">
+
+        <!-- Placeholder affiché tant qu'Elfsight n'est pas configuré -->
+        <div class="elfsight-placeholder" id="elfsight-placeholder">
+          <div class="elfsight-ph-icon">⭐</div>
+          <p class="elfsight-ph-title">Widget Google Reviews</p>
+          <p class="elfsight-ph-desc">
+            Créez votre widget gratuit sur
+            <a href="https://elfsight.com/google-reviews-widget/" target="_blank" rel="noopener">elfsight.com</a>,
+            puis remplacez <code>VOTRE_APP_ID</code> dans le code source.
+          </p>
+          <a href="https://elfsight.com/google-reviews-widget/" target="_blank" rel="noopener"
+             class="btn btn-coral">Créer le widget gratuitement →</a>
         </div>
 
-        <!-- Carousel controls -->
-        <div class="carousel-controls">
-          <button class="carousel-btn" id="carousel-prev" aria-label="Précédent">‹</button>
-          <div class="carousel-dots" id="carousel-dots"></div>
-          <button class="carousel-btn" id="carousel-next" aria-label="Suivant">›</button>
-        </div>
+        <!-- ↓↓↓ Décommentez et remplacez l'ID une fois le widget créé ↓↓↓
+        <div class="elfsight-app-VOTRE_APP_ID" data-elfsight-app-lazy></div>
+        -->
+
       </div>
     </div>
   </section>
