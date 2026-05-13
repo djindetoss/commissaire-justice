@@ -522,95 +522,24 @@
       <div class="section-header" data-animate="fadeInUp">
         <span class="section-eyebrow">Ce que disent nos clients</span>
         <h2 class="section-title light">Témoignages</h2>
+        <!-- Note moyenne Google -->
+        <div class="google-rating-bar" id="google-rating-bar" style="display:none">
+          <img src="https://www.google.com/images/branding/googlelogo/svg/googlelogo_clr_74x24px.svg"
+               alt="Google" class="google-logo-small" />
+          <div class="gr-stars" id="gr-stars"></div>
+          <span class="gr-note" id="gr-note"></span>
+          <span class="gr-count" id="gr-count"></span>
+          <a href="https://g.page/r/reviews" target="_blank" class="gr-link">Voir sur Google →</a>
+        </div>
       </div>
 
       <div class="carousel-wrapper">
+        <!-- Carousel peuplé dynamiquement depuis reviews.json -->
         <div class="carousel" id="carousel">
-
-          <div class="testimonial-card">
-            <div class="testi-stars">★★★★★</div>
-            <blockquote class="testi-text">
-              « Maître ADJAGBA a su traiter notre dossier de recouvrement avec une efficacité et une réactivité remarquables. Résultat obtenu en moins de deux mois. Je recommande vivement ! »
-            </blockquote>
-            <div class="testi-author">
-              <div class="testi-avatar">GD</div>
-              <div>
-                <strong>Guillaume D.</strong>
-                <span>Dirigeant de PME</span>
-              </div>
-            </div>
+          <div class="testi-loading">
+            <div class="testi-spinner"></div>
+            <p>Chargement des avis…</p>
           </div>
-
-          <div class="testimonial-card">
-            <div class="testi-stars">★★★★★</div>
-            <blockquote class="testi-text">
-              « Professionnelle, disponible et à l'écoute. Le constat a été réalisé en urgence et le rapport livré dans les délais annoncés. Un travail irréprochable. »
-            </blockquote>
-            <div class="testi-author">
-              <div class="testi-avatar">MF</div>
-              <div>
-                <strong>Marie F.</strong>
-                <span>Particulière</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="testimonial-card">
-            <div class="testi-stars">★★★★★</div>
-            <blockquote class="testi-text">
-              « Grâce à Maître ADJAGBA, nous avons pu récupérer nos loyers impayés rapidement. Elle connaît parfaitement son métier et explique chaque étape clairement. »
-            </blockquote>
-            <div class="testi-author">
-              <div class="testi-avatar">AB</div>
-              <div>
-                <strong>Agence Bailleur 59</strong>
-                <span>Agence immobilière</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="testimonial-card">
-            <div class="testi-stars">★★★★★</div>
-            <blockquote class="testi-text">
-              « Une étude sérieuse et humaine. La maître prend le temps d'expliquer les procédures et rassure à chaque étape. Je me suis senti pleinement accompagné. »
-            </blockquote>
-            <div class="testi-author">
-              <div class="testi-avatar">PL</div>
-              <div>
-                <strong>Pierre L.</strong>
-                <span>Particulier</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="testimonial-card">
-            <div class="testi-stars">★★★★★</div>
-            <blockquote class="testi-text">
-              « Intervention très rapide pour un constat de dégâts après sinistre. Rapport parfaitement rédigé, accepté immédiatement par l'assurance. Merci ! »
-            </blockquote>
-            <div class="testi-author">
-              <div class="testi-avatar">SC</div>
-              <div>
-                <strong>Sophie C.</strong>
-                <span>Propriétaire</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="testimonial-card">
-            <div class="testi-stars">★★★★★</div>
-            <blockquote class="testi-text">
-              « Compétente, rigoureuse et accessible. Notre société fait appel à l'étude régulièrement pour nos significations et nos recouvrements. Toujours satisfaits. »
-            </blockquote>
-            <div class="testi-author">
-              <div class="testi-avatar">JB</div>
-              <div>
-                <strong>Jean-Baptiste R.</strong>
-                <span>Directeur financier</span>
-              </div>
-            </div>
-          </div>
-
         </div>
 
         <!-- Carousel controls -->

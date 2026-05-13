@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Administration des avis — CDJ Adjagba</title>
+  <link rel="icon" href="favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body class="admin-body">
+
+<!-- ══════════════════════════════════
+     LOGIN SCREEN
+══════════════════════════════════ -->
+<div class="adm-login-screen" id="adm-login">
+  <div class="adm-login-box">
+    <div class="adm-login-logo">
+      <span class="adm-login-icon">⚖️</span>
+      <span class="adm-login-brand">CDJ Admin</span>
+    </div>
+    <h1 class="adm-login-title">Gestion des avis Google</h1>
+    <p class="adm-login-sub">Connectez-vous pour gérer les avis affichés sur le site.</p>
+
+    <form class="adm-login-form" id="adm-login-form" novalidate>
+      <div class="adm-field">
+        <label for="adm-user">Identifiant</label>
+        <input type="text" id="adm-user" placeholder="admin" autocomplete="username" />
+      </div>
+      <div class="adm-field">
+        <label for="adm-pass">Mot de passe</label>
+        <div class="adm-pass-wrap">
+          <input type="password" id="adm-pass" placeholder="••••••••" autocomplete="current-password" />
+          <button type="button" class="adm-eye" id="adm-eye" aria-label="Afficher/masquer">👁</button>
+        </div>
+      </div>
+      <p class="adm-login-err" id="adm-err" style="display:none"></p>
+      <button type="submit" class="adm-login-btn" id="adm-submit-btn">Connexion</button>
+    </form>
+
+    <p class="adm-login-hint">
+      <em>Compte démo : <strong>admin</strong> / <strong>CDJ2026!</strong></em>
+    </p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     ADMIN DASHBOARD
+══════════════════════════════════ -->
+<div class="adm-app" id="adm-app" style="display:none">
+
+  <!-- Top bar -->
+  <header class="adm-header">
+    <div class="adm-header-left">
+      <span class="adm-header-icon">⚖️</span>
+      <span class="adm-header-title">CDJ Admin — Gestion des avis</span>
+    </div>
+    <div class="adm-header-right">
+      <a href="index.html" class="adm-header-link" target="_blank">🌐 Voir le site</a>
+      <button class="adm-header-link adm-logout-btn" id="adm-logout">Déconnexion</button>
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <main class="adm-main">
+
+    <!-- Stats bar -->
+    <div class="adm-stats-row" id="adm-stats-row">
+      <div class="adm-stat-card">
+        <span class="adm-stat-num" id="stat-total">0</span>
+        <span class="adm-stat-label">Avis au total</span>
+      </div>
+      <div class="adm-stat-card">
+        <span class="adm-stat-num" id="stat-visible">0</span>
+        <span class="adm-stat-label">Avis visibles</span>
+      </div>
+      <div class="adm-stat-card">
+        <span class="adm-stat-num" id="stat-hidden">0</span>
+        <span class="adm-stat-label">Avis masqués</span>
+      </div>
+      <div class="adm-stat-card">
+        <span class="adm-stat-num" id="stat-avg">—</span>
+        <span class="adm-stat-label">Note moyenne</span>
+      </div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="adm-toolbar">
+      <div class="adm-toolbar-left">
+        <button class="adm-btn adm-btn-primary" id="btn-add-review">＋ Ajouter un avis</button>
+        <button class="adm-btn adm-btn-outline" id="btn-show-all">Tout afficher</button>
+        <button class="adm-btn adm-btn-outline" id="btn-hide-all">Tout masquer</button>
+        <button class="adm-btn adm-btn-danger" id="btn-reset-overrides">↺ Réinitialiser</button>
+      </div>
+      <div class="adm-toolbar-right">
+        <button class="adm-btn adm-btn-success" id="btn-export">⬇ Exporter reviews.json</button>
+        <button class="adm-btn adm-btn-outline" id="btn-preview">👁 Prévisualiser</button>
+      </div>
+    </div>
+
+    <!-- Filter tabs -->
+    <div class="adm-filter-tabs">
+      <button class="adm-filter-tab active" data-filter="all">Tous</button>
+      <button class="adm-filter-tab" data-filter="visible">Visibles</button>
+      <button class="adm-filter-tab" data-filter="hidden">Masqués</button>
+    </div>
+
+    <!-- Reviews list -->
+    <div class="adm-reviews-list" id="adm-reviews-list">
+      <p class="adm-loading">Chargement des avis…</p>
+    </div>
+
+    <!-- Save notice -->
+    <div class="adm-save-notice" id="adm-save-notice" style="display:none">
+      ⚠️ Vous avez des modifications non exportées. Pensez à exporter le fichier <code>reviews.json</code> et à le déposer dans votre dépôt GitHub.
+    </div>
+
+  </main>
+</div>
+
+<!-- ══════════════════════════════════
+     ADD / EDIT MODAL
+══════════════════════════════════ -->
+<div class="adm-modal-overlay" id="adm-modal-overlay" style="display:none">
+  <div class="adm-modal" id="adm-modal">
+    <div class="adm-modal-header">
+      <h2 id="adm-modal-title">Ajouter un avis</h2>
+      <button class="adm-modal-close" id="adm-modal-close">✕</button>
+    </div>
+    <form class="adm-modal-form" id="adm-modal-form" novalidate>
+      <input type="hidden" id="mf-id" />
+
+      <div class="adm-modal-row">
+        <div class="adm-field">
+          <label for="mf-auteur">Nom de l'auteur *</label>
+          <input type="text" id="mf-auteur" placeholder="Guillaume D." required />
+        </div>
+        <div class="adm-field">
+          <label for="mf-initiales">Initiales *</label>
+          <input type="text" id="mf-initiales" placeholder="GD" maxlength="3" required />
+        </div>
+      </div>
+
+      <div class="adm-modal-row">
+        <div class="adm-field">
+          <label for="mf-note">Note (1-5) *</label>
+          <select id="mf-note" required>
+            <option value="5" selected>⭐⭐⭐⭐⭐ (5)</option>
+            <option value="4">⭐⭐⭐⭐ (4)</option>
+            <option value="3">⭐⭐⭐ (3)</option>
+            <option value="2">⭐⭐ (2)</option>
+            <option value="1">⭐ (1)</option>
+          </select>
+        </div>
+        <div class="adm-field">
+          <label for="mf-date">Date affichée *</label>
+          <input type="text" id="mf-date" placeholder="Il y a 2 semaines" required />
+        </div>
+      </div>
+
+      <div class="adm-field">
+        <label for="mf-texte">Texte de l'avis *</label>
+        <textarea id="mf-texte" rows="4" placeholder="Contenu de l'avis Google…" required></textarea>
+        <span class="adm-char-count" id="mf-char-count">0 caractères</span>
+      </div>
+
+      <div class="adm-modal-row">
+        <div class="adm-field">
+          <label for="mf-ordre">Ordre d'affichage</label>
+          <input type="number" id="mf-ordre" min="1" max="99" value="99" />
+        </div>
+        <div class="adm-field adm-field-toggle">
+          <label>Visible sur le site</label>
+          <label class="adm-toggle">
+            <input type="checkbox" id="mf-visible" checked />
+            <span class="adm-toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <p class="adm-modal-err" id="adm-modal-err" style="display:none"></p>
+      <div class="adm-modal-footer">
+        <button type="button" class="adm-btn adm-btn-outline" id="adm-modal-cancel">Annuler</button>
+        <button type="submit" class="adm-btn adm-btn-primary" id="adm-modal-save">Enregistrer</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PREVIEW MODAL
+══════════════════════════════════ -->
+<div class="adm-modal-overlay" id="adm-preview-overlay" style="display:none">
+  <div class="adm-modal adm-modal-wide">
+    <div class="adm-modal-header">
+      <h2>Prévisualisation du carousel</h2>
+      <button class="adm-modal-close" id="adm-preview-close">✕</button>
+    </div>
+    <div class="adm-preview-body" id="adm-preview-body">
+      <!-- injected by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="adm-toast" id="adm-toast" style="display:none"></div>
+
+<script src="js/admin.js"></script>
+</body>
+</html>

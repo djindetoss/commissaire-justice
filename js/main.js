@@ -114,8 +114,78 @@ tabBtns.forEach(btn => {
 });
 
 
-/* ── Carousel (testimonials) ── */
-(function initCarousel() {
+/* ── Stars helper ── */
+function starsHTML(note) {
+  return Array.from({ length: 5 }, (_, i) => {
+    if (i < Math.floor(note)) return '<span class="star full">★</span>';
+    if (i < note)             return '<span class="star half">★</span>';
+    return '<span class="star empty">☆</span>';
+  }).join('');
+}
+
+/* ── Load reviews from reviews.json ── */
+async function loadReviews() {
+  try {
+    const res = await fetch('reviews.json?v=' + Date.now());
+    if (!res.ok) throw new Error('fetch failed');
+    const all = await res.json();
+    /* Admin overrides from localStorage */
+    let overrides = {};
+    try { overrides = JSON.parse(localStorage.getItem('cdj_review_overrides') || '{}'); } catch {}
+    const reviews = all
+      .map(r => ({ ...r, visible: r.id in overrides ? overrides[r.id] : r.visible }))
+      .filter(r => r.visible)
+      .sort((a, b) => (a.ordre || 99) - (b.ordre || 99));
+    renderCarousel(reviews);
+    renderGoogleBar(reviews);
+  } catch (e) {
+    console.warn('reviews.json not loaded', e);
+    renderCarousel([]);
+  }
+}
+
+function renderGoogleBar(reviews) {
+  if (!reviews.length) return;
+  const avg  = (reviews.reduce((s, r) => s + r.note, 0) / reviews.length).toFixed(1);
+  const bar  = document.getElementById('google-rating-bar');
+  const stEl = document.getElementById('gr-stars');
+  const noEl = document.getElementById('gr-note');
+  const coEl = document.getElementById('gr-count');
+  if (!bar) return;
+  if (stEl) stEl.innerHTML  = starsHTML(parseFloat(avg));
+  if (noEl) noEl.textContent = avg;
+  if (coEl) coEl.textContent = `(${reviews.length} avis)`;
+  bar.style.display = 'flex';
+}
+
+function renderCarousel(reviews) {
+  const carousel = document.getElementById('carousel');
+  if (!carousel) return;
+  if (!reviews.length) {
+    carousel.innerHTML = '<p style="color:rgba(255,255,255,.5);text-align:center;padding:40px">Aucun avis à afficher.</p>';
+    return;
+  }
+  carousel.innerHTML = reviews.map(r => `
+    <div class="testimonial-card">
+      <div class="testi-card-top">
+        <div class="testi-stars-row">${starsHTML(r.note)}</div>
+        <img src="https://www.google.com/images/branding/googlelogo/svg/googlelogo_clr_74x24px.svg"
+             alt="Google" class="testi-google-logo" />
+      </div>
+      <blockquote class="testi-text">« ${r.texte} »</blockquote>
+      <div class="testi-author">
+        <div class="testi-avatar">${r.initiales}</div>
+        <div>
+          <strong>${r.auteur}</strong>
+          <span>${r.date}</span>
+        </div>
+      </div>
+    </div>`).join('');
+  initCarouselEngine();
+}
+
+/* ── Carousel engine ── */
+function initCarouselEngine() {
   const carousel = document.getElementById('carousel');
   if (!carousel) return;
 
@@ -210,7 +280,10 @@ tabBtns.forEach(btn => {
 
   buildDots();
   updateLayout();
-})();
+}
+
+/* ── Init ── */
+document.addEventListener('DOMContentLoaded', () => loadReviews());
 
 
 /* ── Contact form ── */
