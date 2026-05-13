@@ -361,3 +361,56 @@ document.addEventListener('keydown', e => {
     document.body.style.overflow = '';
   }
 });
+
+
+/* ── Masquer les éléments Elfsight non désirés ── */
+(function hideElfsightNoise() {
+  /* Textes à supprimer du DOM (insensible à la casse) */
+  const HIDDEN_TEXTS = [
+    'what our customers say',
+    'free google reviews widget',
+    'powered by elfsight',
+  ];
+
+  function removeNoise(root) {
+    /* 1. Par contenu texte exact */
+    root.querySelectorAll('*').forEach(el => {
+      const txt = el.textContent.trim().toLowerCase();
+      if (HIDDEN_TEXTS.includes(txt) && !el.children.length) {
+        /* Remonter au parent significatif (section / div) */
+        let target = el;
+        while (target.parentElement &&
+               target.parentElement.textContent.trim().toLowerCase() === txt) {
+          target = target.parentElement;
+        }
+        target.style.setProperty('display', 'none', 'important');
+      }
+    });
+
+    /* 2. Par classes connues (Elfsight change parfois ses noms) */
+    const HIDDEN_CLASSES = [
+      '[class*="page-title"]',
+      '[class*="widget-title"]',
+      '[class*="widget-toolbar"]',
+      '[class*="powered-by"]',
+      '[class*="branding"]',
+      '[class*="eapps-link"]',
+    ];
+    HIDDEN_CLASSES.forEach(sel => {
+      root.querySelectorAll(`.elfsight-wrapper ${sel}`).forEach(el => {
+        el.style.setProperty('display', 'none', 'important');
+      });
+    });
+  }
+
+  /* Observer : se déclenche dès qu'Elfsight injecte son HTML */
+  const observer = new MutationObserver(() => {
+    const wrapper = document.querySelector('.elfsight-wrapper');
+    if (wrapper) removeNoise(wrapper);
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
+
+  /* Passe initiale au cas où le widget est déjà chargé */
+  removeNoise(document);
+})();
